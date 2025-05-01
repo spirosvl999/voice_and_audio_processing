@@ -1,4 +1,4 @@
-# Speech Segmentation Final Project
+# Voice And Audio Processing Final Project
 This repository contains the final project for the Speech Segmentation course. The goal is to detect and segment speech (foreground) versus background noise from audio files using classification and post-processing techniques.
 
 ## Programming Languages & Libraries:

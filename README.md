@@ -41,8 +41,6 @@ speech_segmentation_project/
 ```bash
 pip install -r requirements.txt
 python main.py       # Train & predict
-python evaluate.py   # Evaluate results
-python visualize_segments.py  # Visualize audio segments
 ```
 
 ## Data Sources:

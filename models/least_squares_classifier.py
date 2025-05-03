@@ -1,17 +1,23 @@
 import numpy as np
-from sklearn.linear_model import RidgeClassifier  # ✅ Κατάλληλο για ταξινόμηση
+from sklearn.linear_model import RidgeClassifier
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import classification_report
 
 def train_least_squares():
+    print("[Least Squares] Loading dataset...")
     data = np.load("data/features_dataset.npz")
+
     X = data['X']
     y = data['y']
+
+    if X.size == 0 or y.size == 0:
+        raise ValueError("Dataset Empty!")
 
     encoder = LabelEncoder()
     y_encoded = encoder.fit_transform(y)
 
-    model = RidgeClassifier()  # ✅ RidgeClassifier αντί για Ridge
+    print("[Least Squares] Training model...")
+    model = RidgeClassifier()
     model.fit(X, y_encoded)
 
     preds = model.predict(X)

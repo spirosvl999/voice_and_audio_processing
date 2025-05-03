@@ -30,9 +30,8 @@ def create_dataset(speech_dir, noise_dir):
     labels = np.array([x[1] for x in all_data])
     filenames = np.array([x[2] for x in all_data])
 
-    # 📁 Ensure the output folder exists
-    output_path = "voice_and_audio_processing/data/features_dataset.npz"
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    # Create 'data' directory if it doesn't exist
+    os.makedirs("data", exist_ok=True)
 
-    # 💾 Save the dataset
-    np.savez(output_path, X=features, y=labels, filenames=filenames)
+    # Save to consistent relative path
+    np.savez("data/features_dataset.npz", X=features, y=labels, filenames=filenames)

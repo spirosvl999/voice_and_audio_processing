@@ -5,7 +5,7 @@ from src.predict_and_generate_csv import predict_and_export_csv
 
 if __name__ == "__main__":
     print("[1] Extracting features...")
-    create_dataset("data/train/speech", "data/train/noise")
+    create_dataset("voice_and_audio_processing/data/train/speech", "voice_and_audio_processing/data/train/noise")
 
     print("[2] Training Least Squares model...")
     train_least_squares()

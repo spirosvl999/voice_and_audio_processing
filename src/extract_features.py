@@ -27,7 +27,6 @@ def extract_features_from_directory(directory, label, sr=16000, frame_length=0.0
 
     return data
 
-
 def create_dataset(speech_dir, noise_dir):
     print("[Dataset] Loading speech files...")
     speech_data = extract_features_from_directory(speech_dir, 'foreground')

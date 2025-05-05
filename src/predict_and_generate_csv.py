@@ -1,3 +1,4 @@
+import os
 import librosa
 import numpy as np
 import pandas as pd
@@ -5,32 +6,41 @@ import torch
 from models.mlp_classifier import MLP
 from sklearn.linear_model import Ridge
 from sklearn.preprocessing import LabelEncoder
-
-# Simple median filter
 from scipy.signal import medfilt
 
 def predict_and_export_csv(filepath, model_type="mlp", sr=16000):
+    if not os.path.isfile(filepath):
+        print(f"[ERROR] File not found: {filepath}")
+        return
+
     frame_len = int(sr * 0.025)
     hop_len = int(sr * 0.010)
 
-    y, _ = librosa.load(filepath, sr=sr)
+    try:
+        y, _ = librosa.load(filepath, sr=sr)
+    except Exception as e:
+        print(f"[ERROR] Could not load audio file: {e}")
+        return
+
     mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13, hop_length=hop_len, n_fft=frame_len).T
 
     if model_type == "mlp":
         model = MLP(mfccs.shape[1])
-        # Προσομοίωση εκπαιδευμένου μοντέλου - εσύ φόρτωσε weights αν έχεις αποθηκεύσει
         model.eval()
         with torch.no_grad():
             inputs = torch.tensor(mfccs, dtype=torch.float32)
             preds = model(inputs).numpy().flatten()
     else:
         model = Ridge(alpha=1.0)
-        # Load & fit το ίδιο dataset για now (σε κανονική χρήση: load pretrained)
-        data = np.load("data/features_dataset.npz")
-        encoder = LabelEncoder()
-        y_encoded = encoder.fit_transform(data['y'])
-        model.fit(data['X'], y_encoded)
-        preds = model.predict(mfccs)
+        try:
+            data = np.load("data/features_dataset.npz")
+            encoder = LabelEncoder()
+            y_encoded = encoder.fit_transform(data['y'])
+            model.fit(data['X'], y_encoded)
+            preds = model.predict(mfccs)
+        except Exception as e:
+            print(f"[ERROR] Failed to load or use ridge model: {e}")
+            return
 
     preds_bin = (preds > 0.5).astype(int)
     preds_bin = medfilt(preds_bin, kernel_size=5)
@@ -48,8 +58,9 @@ def predict_and_export_csv(filepath, model_type="mlp", sr=16000):
             last_class = preds_bin[i]
 
     # Τελευταίο segment
-    timestamps.append([filepath, round(start_time, 2), round(len(preds_bin)*0.010, 2), class_map[last_class]])
+    timestamps.append([filepath, round(start_time, 2), round(len(preds_bin) * 0.010, 2), class_map[last_class]])
 
+    os.makedirs("outputs", exist_ok=True)
     df = pd.DataFrame(timestamps, columns=["Audiofile", "start", "end", "class"])
     df.to_csv("outputs/predictions.csv", index=False)
     print("Saved to outputs/predictions.csv")

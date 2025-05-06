@@ -1,4 +1,3 @@
-
 import os
 import librosa
 import numpy as np
@@ -49,16 +48,17 @@ def predict_and_export_csv(filepath, model_type="mlp", sr=16000):
     timestamps = []
     class_map = {0: "background", 1: "foreground"}
     last_class = preds_bin[0]
-    start_time = 0.0
+    start_time = 0
 
     for i in range(1, len(preds_bin)):
         if preds_bin[i] != last_class:
-            end_time = i * 0.010  # hop length in seconds
-            timestamps.append([os.path.basename(filepath), round(start_time, 2), round(end_time, 2), class_map[last_class]])
+            end_time = i * 0.010
+            timestamps.append([filepath, round(start_time, 2), round(end_time, 2), class_map[last_class]])
             start_time = end_time
             last_class = preds_bin[i]
 
-    timestamps.append([os.path.basename(filepath), round(start_time, 2), round(len(preds_bin) * 0.010, 2), class_map[last_class]])
+    # Τελευταίο segment
+    timestamps.append([filepath, round(start_time, 2), round(len(preds_bin) * 0.010, 2), class_map[last_class]])
 
     os.makedirs("outputs", exist_ok=True)
     df = pd.DataFrame(timestamps, columns=["Audiofile", "start", "end", "class"])

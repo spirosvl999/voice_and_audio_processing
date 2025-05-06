@@ -8,14 +8,17 @@ This repository contains the final project for the Speech Segmentation course. T
 - Numpy
 - Matplotlib
 - Pandas
+- PyTorch
+- SciPy
 
-## Tools Used
-- MLP Classifier (3-layer)
-- Least Squares Classifier
-- Frame-level Evaluation
-- CSV Export of Segments
-- JSON Ground Truth Comparison
-- Waveform Visualization
+## Features
+- MFCC feature extraction
+- MLP-based classifier
+- Ridge regression (Least Squares) classifier
+- Frame-level evaluation and classification
+- CSV export of segment classifications
+- JSON ground truth comparison
+- Waveform & prediction visualization
 
 ## File Structure:
 ```
@@ -38,11 +41,16 @@ speech_segmentation_project/
 ```
 
 ## How to Run:
+Install the required libraries:
 ```bash
 pip install -r requirements.txt
-python main.py       # Train & predict
-python evaluate.py
-python visualize_segments.py
+```
+
+Then run:
+```bash
+python main.py             # Train & predict
+python evaluate.py         # Evaluate predictions against ground truth
+python visualize_segments.py   # Visualize waveform and segments
 ```
 
 ## Data Sources:
@@ -50,4 +58,4 @@ python visualize_segments.py
 - [CHiME Dataset](https://www.openslr.org/26)
 
 ## Last Updated
-This README was last updated on [5/1/2025].
+This README was last updated on [5/6/2025].

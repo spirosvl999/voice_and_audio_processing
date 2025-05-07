@@ -42,6 +42,6 @@ for segment in annotations:
     for i in range(start_frame, min(end_frame, n_frames)):
         gt_labels[i] = label
 
-# --- Evaluation ---
+# Evaluation
 print("\nClassification Report (frame-level):")
 print(classification_report(gt_labels, pred_labels, digits=4))

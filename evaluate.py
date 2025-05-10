@@ -16,7 +16,7 @@ pred_df = pd.read_csv(PREDICTIONS_CSV)
 if DURATION is None:
     DURATION = pred_df["end"].max()
 
-# Μετατροπή predictions σε frame-level
+# METATROPH predictions σε frame-level
 n_frames = int(DURATION / FRAME_SIZE)
 pred_labels = ["background"] * n_frames
 
@@ -26,7 +26,7 @@ for _, row in pred_df.iterrows():
     for i in range(start_frame, min(end_frame, n_frames)):
         pred_labels[i] = row["class"]
 
-# --- Load Ground Truth ---
+# Load Ground Truth
 with open(TRANSCRIPTIONS_JSON, "r") as f:
     gt_data = json.load(f)
 
@@ -41,6 +41,8 @@ for segment in annotations:
     end_frame = int(end / FRAME_SIZE)
     for i in range(start_frame, min(end_frame, n_frames)):
         gt_labels[i] = label
+
+        
 
 # Evaluation
 print("\nClassification Report (frame-level):")

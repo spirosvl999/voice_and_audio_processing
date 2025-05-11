@@ -17,7 +17,7 @@ def train_least_squares():
     y_encoded = encoder.fit_transform(y)
 
     print("[Least Squares] Training model...")
-    model = RidgeClassifier()
+    model = RidgeClassifier(class_weight='balanced') ####
     model.fit(X, y_encoded)
 
     preds = model.predict(X)

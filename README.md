@@ -49,8 +49,6 @@ pip install -r requirements.txt
 Then run:
 ```bash
 python main.py             # Train & predict
-python evaluate.py         # Evaluate predictions against ground truth
-python visualize_segments.py   # Visualize waveform and segments
 ```
 
 ## Data Sources:

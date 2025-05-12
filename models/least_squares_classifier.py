@@ -20,7 +20,7 @@ def train_least_squares():
     model = RidgeClassifier(class_weight='balanced')                                # Linear model trained with Least Squares.
     model.fit(X, y_encoded)                                                         # Model training for X data depends the y_encoded tags 
 
-    preds = model.predict(X)
+    preds = model.predict(X)                                                        # Predictions on the same data.
 
     print("\n[Least Squares] Report:\n")
-    print(classification_report(y_encoded, preds, target_names=encoder.classes_))
+    print(classification_report(y_encoded, preds, target_names=encoder.classes_))   # Printing full report on the least squares.

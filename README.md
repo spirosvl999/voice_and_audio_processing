@@ -52,7 +52,8 @@ python main.py             # Train & predict
 ```
 
 ## Export：
-```outputs/predictions.csv
+```
+outputs/predictions.csv
 ```
 
 ## Data Sources:

@@ -5,20 +5,20 @@ from sklearn.metrics import classification_report
 
 def train_least_squares():
     print("[Least Squares] Loading dataset...")
-    data = np.load("data/features_dataset.npz")
+    data = np.load("data/features_dataset.npz")                                     # Use the dataset we created on extract_features.py.
 
-    X = data['X']
-    y = data['y']
+    X = data['X']                                                                   
+    y = data['y']                                                                  
 
     if X.size == 0 or y.size == 0:
-        raise ValueError("Dataset Empty!")
+        raise ValueError("Dataset Empty!")                                          # Error message if the dataset is Empty.
 
-    encoder = LabelEncoder()
+    encoder = LabelEncoder()                                                        # 0 or 1 depends on background or foreground.
     y_encoded = encoder.fit_transform(y)
 
     print("[Least Squares] Training model...")
-    model = RidgeClassifier(class_weight='balanced') ####
-    model.fit(X, y_encoded)
+    model = RidgeClassifier(class_weight='balanced')                                # Linear model trained with Least Squares.
+    model.fit(X, y_encoded)                                                         # Model training for X data depends the y_encoded tags 
 
     preds = model.predict(X)
 

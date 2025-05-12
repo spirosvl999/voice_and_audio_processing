@@ -1,4 +1,3 @@
-
 import os
 import librosa
 import numpy as np
@@ -8,6 +7,8 @@ from models.mlp_classifier import MLP
 from sklearn.linear_model import Ridge
 from sklearn.preprocessing import LabelEncoder
 from scipy.signal import medfilt
+import pickle
+
 
 def predict_and_export_csv(filepath, model_type="mlp", sr=16000):
     if not os.path.isfile(filepath):
@@ -27,7 +28,12 @@ def predict_and_export_csv(filepath, model_type="mlp", sr=16000):
 
     if model_type == "mlp":
         model = MLP(mfccs.shape[1])
+        model.load_state_dict(torch.load("models/mlp_weights.pth"))
         model.eval()
+
+        with open("models/mlp_label_encoder.pkl", "rb") as f:
+            encoder = pickle.load(f)
+
         with torch.no_grad():
             inputs = torch.tensor(mfccs, dtype=torch.float32)
             preds = model(inputs).numpy().flatten()

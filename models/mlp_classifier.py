@@ -4,6 +4,8 @@ import torch.nn as nn
 from torch.utils.data import DataLoader, TensorDataset
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import classification_report
+import pickle
+import os
 
 class MLP(nn.Module):
     def __init__(self, input_size):
@@ -52,40 +54,9 @@ def train_mlp():
         print(classification_report(y_encoded, preds_binary, target_names=encoder.classes_))
 
     # ✅ Save model weights
+    os.makedirs("models", exist_ok=True)
     torch.save(model.state_dict(), "models/mlp_weights.pth")
 
     # ✅ Save label encoder
-    import pickle
     with open("models/mlp_label_encoder.pkl", "wb") as f:
         pickle.dump(encoder, f)
-    data = np.load("data/features_dataset.npz")
-    X = data['X']
-    y = data['y']
-
-    encoder = LabelEncoder()
-    y_encoded = encoder.fit_transform(y)
-
-    X_tensor = torch.tensor(X, dtype=torch.float32)
-    y_tensor = torch.tensor(y_encoded, dtype=torch.float32).view(-1, 1)
-
-    dataset = TensorDataset(X_tensor, y_tensor)
-    loader = DataLoader(dataset, batch_size=64, shuffle=True)
-
-    model = MLP(X.shape[1])
-    criterion = nn.BCELoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
-
-    for epoch in range(10):
-        for xb, yb in loader:
-            preds = model(xb)
-            loss = criterion(preds, yb)
-            optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
-        print(f"Epoch {epoch+1}: Loss={loss.item():.4f}")
-
-    with torch.no_grad():
-        preds = model(X_tensor).numpy()
-        preds_binary = (preds > 0.5).astype(int)
-        print("\n[MLP] Report:\n")
-        print(classification_report(y_encoded, preds_binary, target_names=encoder.classes_))

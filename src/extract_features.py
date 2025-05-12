@@ -29,18 +29,18 @@ def extract_features_from_directory(directory, label, sr=16000, frame_length=0.0
 
 def create_dataset(speech_dir, noise_dir):
     print("[Dataset] Loading speech files...")
-    speech_data = extract_features_from_directory(speech_dir, 'foreground')                                     # We use the extract_features_from_directory function for foreground.
+    speech_data = extract_features_from_directory(speech_dir, 'foreground')                                             # We use the extract_features_from_directory function for foreground.
     print(f"[Dataset] Loaded {len(speech_data)} speech samples.")
 
     print("[Dataset] Loading noise files...")
-    noise_data = extract_features_from_directory(noise_dir, 'background')                                       # We use the extract_features_from_directory function for background.
+    noise_data = extract_features_from_directory(noise_dir, 'background')                                               # We use the extract_features_from_directory function for background.
     print(f"[Dataset] Loaded {len(noise_data)} noise samples.")
 
     all_data = speech_data + noise_data
     print(f"[Dataset] Total samples: {len(all_data)}")
 
     if len(all_data) == 0:
-        raise ValueError("No data extracted. Check your file paths or .wav files.")
+        raise ValueError("No data extracted. Check your file paths or .wav files.")                                     # An Error if we dont have files for data.
 
     np.random.shuffle(all_data)
 

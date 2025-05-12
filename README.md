@@ -51,6 +51,10 @@ Then run:
 python main.py             # Train & predict
 ```
 
+## Export：
+```outputs/predictions.csv
+```
+
 ## Data Sources:
 - [MUSAN Corpus](https://www.openslr.org/17)
 - [CHiME Dataset](https://www.openslr.org/26)

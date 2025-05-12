@@ -5,7 +5,7 @@ from sklearn.metrics import classification_report
 
 def train_least_squares():
     print("[Least Squares] Loading dataset...")
-    data = np.load("data/features_dataset.npz")                                     # Use the dataset we created on extract_features.py.
+    data = np.load("voice_and_audio_processing/data/features_dataset.npz")                                     # Use the dataset we created on extract_features.py.
 
     X = data['X']                                                                   
     y = data['y']                                                                  

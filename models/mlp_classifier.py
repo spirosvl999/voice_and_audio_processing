@@ -21,7 +21,7 @@ class MLP(nn.Module):
         return self.model(x)
 
 def train_mlp():
-    data = np.load("data/features_dataset.npz")                                 # Get the datas and their tags.
+    data = np.load("voice_and_audio_processing/data/features_dataset.npz")                                 # Get the datas and their tags.
     X = data['X']
     y = data['y']
 
@@ -54,7 +54,7 @@ def train_mlp():
         print(classification_report(y_encoded, preds_binary, target_names=encoder.classes_))
 
     os.makedirs("models", exist_ok=True)                                        # Save the MLP into .pth file.
-    torch.save(model.state_dict(), "models/mlp_weights.pth")
+    torch.save(model.state_dict(), "voice_and_audio_processing/models/mlp_weights.pth")
 
-    with open("models/mlp_label_encoder.pkl", "wb") as f:                       # Save the encoder.
+    with open("voice_and_audio_processing/models/mlp_label_encoder.pkl", "wb") as f:                       # Save the encoder.
         pickle.dump(encoder, f)

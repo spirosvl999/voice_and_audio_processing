@@ -28,10 +28,10 @@ def predict_and_export_csv(filepath, model_type="mlp", sr=16000):
 
     if model_type == "mlp":
         model = MLP(mfccs.shape[1])
-        model.load_state_dict(torch.load("models/mlp_weights.pth"))
+        model.load_state_dict(torch.load("voice_and_audio_processing/models/mlp_weights.pth"))
         model.eval()
 
-        with open("models/mlp_label_encoder.pkl", "rb") as f:
+        with open("voice_and_audio_processing/models/mlp_label_encoder.pkl", "rb") as f:
             encoder = pickle.load(f)
 
         with torch.no_grad():
@@ -40,7 +40,7 @@ def predict_and_export_csv(filepath, model_type="mlp", sr=16000):
     else:
         model = Ridge(alpha=1.0)
         try:
-            data = np.load("data/features_dataset.npz")
+            data = np.load("voice_and_audio_processing/data/features_dataset.npz")
             encoder = LabelEncoder()
             y_encoded = encoder.fit_transform(data['y'])
             model.fit(data['X'], y_encoded)
@@ -68,5 +68,5 @@ def predict_and_export_csv(filepath, model_type="mlp", sr=16000):
 
     os.makedirs("outputs", exist_ok=True)
     df = pd.DataFrame(timestamps, columns=["Audiofile", "start", "end", "class"])
-    df.to_csv("outputs/predictions.csv", index=False)
+    df.to_csv("voice_and_audio_processing/outputs/predictions.csv", index=False)
     print("Saved to outputs/predictions.csv")

@@ -53,10 +53,8 @@ def train_mlp():
         print("\n[MLP] Report:\n")
         print(classification_report(y_encoded, preds_binary, target_names=encoder.classes_))
 
-    # ✅ Save model weights
     os.makedirs("models", exist_ok=True)
     torch.save(model.state_dict(), "models/mlp_weights.pth")
 
-    # ✅ Save label encoder
     with open("models/mlp_label_encoder.pkl", "wb") as f:
         pickle.dump(encoder, f)

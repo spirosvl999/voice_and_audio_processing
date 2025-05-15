@@ -24,18 +24,19 @@ This repository contains the final project for the Speech Segmentation course. T
 ```
 speech_segmentation_project/
 ├── data/
+|   ├── features_dataset.npz
 │   ├── train/
 │   │   ├── speech/
 │   │   └── noise/
 │   └── test/
-│       ├── file1.wav
-│       └── transcriptions/
-│           └── test_file.json
+│       └── file1.wav
+├── src/
+│   ├── extract_features.py
+│   └── predict_and_generate_csv.py
 ├── outputs/
 │   └── predictions.csv
 ├── main.py
-├── evaluate.py
-├── visualize_segments.py
+├── LICENCE.txt
 ├── requirements.txt
 └── README.md
 ```

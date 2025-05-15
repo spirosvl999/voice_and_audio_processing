@@ -12,7 +12,7 @@ import pickle
 
 def predict_and_export_csv(filepath, model_type="mlp", sr=16000):
     if not os.path.isfile(filepath):
-        print(f"[ERROR] File not found: {filepath}")
+        print(f"[ERROR] File not found: {filepath}")                                                                        # Error Message.
         return
 
     frame_len = int(sr * 0.025)
@@ -21,7 +21,7 @@ def predict_and_export_csv(filepath, model_type="mlp", sr=16000):
     try:
         y, _ = librosa.load(filepath, sr=sr)
     except Exception as e:
-        print(f"[ERROR] Could not load audio file: {e}")                                                                    # Error Message
+        print(f"[ERROR] Could not load audio file: {e}")                                                                    # Error Message.
         return
 
     mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13, hop_length=hop_len, n_fft=frame_len).T

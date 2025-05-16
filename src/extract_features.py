@@ -49,6 +49,6 @@ def create_dataset(speech_dir, noise_dir):
     filenames = np.array([x[2] for x in all_data])
 
     os.makedirs("data", exist_ok=True)                                                                                  # Εnsure directory exists.
-    np.savez("voice_and_audio_processing/data/features_dataset.npz", X=features, y=labels, filenames=filenames)                                    # Use the extracted files to a new dataset.
+    np.savez("voice_and_audio_processing/data/features_dataset.npz", X=features, y=labels, filenames=filenames)         # Use the extracted files to a new dataset.
 
     print("[Dataset] Dataset saved to data/features_dataset.npz")                                                       # Print message that everything went right.

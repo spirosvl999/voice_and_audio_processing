@@ -1,6 +1,12 @@
 # Voice And Audio Processing Final Project
 This repository contains the final project for the Speech Segmentation course. The goal is to detect and segment speech (foreground) versus background noise from audio files using classification and post-processing techniques.
 
+
+![GitHub repo size](https://img.shields.io/github/repo-size/spirosvl999/voice_and_audio_processing)
+![GitHub last commit](https://img.shields.io/github/last-commit/spirosvl999/voice_and_audio_processing)
+![GitHub language count](https://img.shields.io/github/languages/count/spirosvl999/voice_and_audio_processing)
+
+
 ## Programming Languages & Libraries:
 - Python 3.8+
 - Scikit-learn

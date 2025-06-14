@@ -55,7 +55,7 @@ pip install -r requirements.txt
 
 Then run:
 ```bash
-python main.py             # Train & predict
+python main.py
 ```
 
 ## Export：
